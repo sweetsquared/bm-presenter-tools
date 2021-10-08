@@ -66,9 +66,17 @@ chrome.extension.sendMessage({}, function(response) {
 	}
 
 	function toggleControlledPresenter(index) {
-		debugger;
+
 		const elements = []
 		
+		$('li[data-role="Organizer"]').each(function(element) {
+			const es = []
+			$(this).find('.sr-room-people-mic').each( function(e) {
+				es.push($(this))
+			})
+			elements.push(es)
+		})
+
 		$('li[data-role="Presenter"]').each(function(element) {
 			const es = []
 			$(this).find('.sr-room-people-mic').each( function(e) {
