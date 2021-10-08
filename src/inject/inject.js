@@ -33,7 +33,9 @@ chrome.extension.sendMessage({}, function(response) {
 
 	function mute( value ) {
 		if ( value === undefined ) {
-			value = $('#mic-status-mute').is(':visible')
+			//debugger
+			//value = $('#mic-status-mute').is(':visible')
+			value = $('#mic-menu').hasClass('clroom-mute')
 		}
 		if ( value ) {
 			$('#clroom-audio-dropdown-li-unmute').trigger('click')
@@ -63,6 +65,23 @@ chrome.extension.sendMessage({}, function(response) {
 		}
 	}
 
+	function toggleControlledPresenter(index) {
+		debugger;
+		const elements = []
+		
+		$('li[data-role="Presenter"]').each(function(element) {
+			const es = []
+			$(this).find('.sr-room-people-mic').each( function(e) {
+				es.push($(this))
+			})
+			elements.push(es)
+		})
+		
+		if ( elements && elements.length && elements[index]) {
+			elements[index].forEach( e => e.trigger('click'))
+		}
+	}
+
 	var readyStateCheckInterval = setInterval(function() {
 	if (document.readyState === "complete") {
 		clearInterval(readyStateCheckInterval);
@@ -88,6 +107,18 @@ chrome.extension.sendMessage({}, function(response) {
 					case 'K':
 						camera()
 						break;
+					case 'Q':
+						toggleControlledPresenter(0)
+						break
+					case 'W':
+						toggleControlledPresenter(1)
+						break
+					case 'E':
+						toggleControlledPresenter(2)
+						break
+					case 'R':
+						toggleControlledPresenter(3)
+						break
 				}
 			}
 		})
